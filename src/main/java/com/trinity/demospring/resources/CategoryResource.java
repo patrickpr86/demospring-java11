@@ -1,28 +1,35 @@
 package com.trinity.demospring.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.trinity.demospring.entities.Category;
+import com.trinity.demospring.services.CategoryService;
 
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {
 
+	@Autowired
+	private CategoryService service;
+
 	@GetMapping
-	public List<Category> list() {
-		Category cat = new Category(null, "TI");
-		Category cat2 = new Category(null, "Office");
+	public ResponseEntity<List<Category>> findAll() {
+		List<Category> list = service.findAll();
+		return ResponseEntity.ok().body(list);
 
-		List<Category> list = new ArrayList<>();
-		list.add(cat);
-		list.add(cat2);
+	}
 
-		return list;
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Category> findById(@PathVariable Long id) {
+		Category obj = service.findById(id);
+		return ResponseEntity.ok().body(obj);
 
 	}
 
