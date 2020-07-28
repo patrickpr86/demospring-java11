@@ -1,8 +1,8 @@
 package com.trinity.demospring.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class Category implements Serializable{
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "categories")
-	private Set<Product> products = new HashSet<>();
+	private List<Product> products = new ArrayList<>();
 	
 	public Category() {
 		
@@ -55,7 +55,7 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 	
-	public Set<Product> getProducts(){
+	public List<Product> getProducts(){
 		return products;
 	}
 
