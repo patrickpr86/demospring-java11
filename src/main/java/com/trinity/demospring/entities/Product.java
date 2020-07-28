@@ -8,36 +8,42 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name="tb_category")
-public class Category implements Serializable{
+@Table(name = "tb_product")
+public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	private Double price;
 	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "categories")
-	private Set<Product> products = new HashSet<>();
+	@ManyToMany
+	@JoinTable(name ="tb_product_category",
+	joinColumns = @JoinColumn(name = "product_id"),
+	inverseJoinColumns = @JoinColumn(name ="category_id"))
+	private Set<Category> categories = new HashSet<>();
 	
-	public Category() {
-		
+
+
+	public Product() {
+
 	}
 
-	public Category(Long id, String name) {
+	public Product(Long id, String name, Double price) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.price = price;
 	}
 	
-	
+		
 
 	public Long getId() {
 		return id;
@@ -54,9 +60,17 @@ public class Category implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 	
-	public Set<Product> getProducts(){
-		return products;
+	public Set<Category> getCategories() {
+		return categories;
 	}
 
 	@Override
@@ -75,7 +89,7 @@ public class Category implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Product other = (Product) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,8 +97,5 @@ public class Category implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }
