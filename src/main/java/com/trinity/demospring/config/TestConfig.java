@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.trinity.demospring.entities.Adress;
 import com.trinity.demospring.entities.Category;
 import com.trinity.demospring.entities.City;
+import com.trinity.demospring.entities.Client;
 import com.trinity.demospring.entities.Product;
 import com.trinity.demospring.entities.State;
+import com.trinity.demospring.entities.enums.ClientType;
+import com.trinity.demospring.repositories.AdressRepository;
 import com.trinity.demospring.repositories.CategoryRepository;
 import com.trinity.demospring.repositories.CityRepository;
+import com.trinity.demospring.repositories.ClientRepository;
 import com.trinity.demospring.repositories.ProductRepository;
 import com.trinity.demospring.repositories.StateRepository;
 
@@ -32,6 +37,12 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private CityRepository cityRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
+	
+	@Autowired
+	private AdressRepository adressRepository;
 
 	@Override
 	
@@ -65,6 +76,17 @@ public class TestConfig implements CommandLineRunner{
 		
 		stateRepository.saveAll(Arrays.asList(sta1, sta2));
 		cityRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
+		
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "09978799980", ClientType.PHYSICALPERSON);
+		cli1.getPhones().addAll(Arrays.asList("23328899", "99885465"));
+		
+		Adress ad1 =  new Adress(null, "Rua Santa Marta", "411", "apt 303", "Maruipe", "13144604", cli1, cit1);
+		Adress ad2 = new Adress(null, "Avenida Matos", "105", "sala 800", "Centro", "13140000", cli1, cit2);
+		
+		cli1.getAdresses().addAll(Arrays.asList(ad1, ad2));
+		
+		clientRepository.saveAll(Arrays.asList(cli1));
+		adressRepository.saveAll(Arrays.asList(ad1, ad2));
 		
 		
 		
