@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.course.services.exceptions.ResourceNotFoundException;
 import com.trinity.demospring.entities.Client;
 import com.trinity.demospring.repositories.ClientRepository;
-import com.trinity.demospring.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClientService {
@@ -22,9 +22,8 @@ public class ClientService {
 	}
 	
 	public Client findById(Long id) {
-		Optional<Client> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Client.class.getName()));
+		Optional<Client> obj =  repository.findById(id);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	
