@@ -23,7 +23,7 @@ public class State implements Serializable {
 	
 	
 	@JsonBackReference
-	@OneToMany(mappedBy = "state")
+	@OneToMany(mappedBy = "tb_state")
 	private List<City> cities = new ArrayList<>();
 	
 	public  State() {

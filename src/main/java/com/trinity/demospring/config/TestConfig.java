@@ -13,6 +13,7 @@ import com.trinity.demospring.entities.Category;
 import com.trinity.demospring.entities.City;
 import com.trinity.demospring.entities.Client;
 import com.trinity.demospring.entities.Order;
+import com.trinity.demospring.entities.OrderItem;
 import com.trinity.demospring.entities.Payment;
 import com.trinity.demospring.entities.PaymentBankSlip;
 import com.trinity.demospring.entities.PaymentByCard;
@@ -24,6 +25,7 @@ import com.trinity.demospring.repositories.AdressRepository;
 import com.trinity.demospring.repositories.CategoryRepository;
 import com.trinity.demospring.repositories.CityRepository;
 import com.trinity.demospring.repositories.ClientRepository;
+import com.trinity.demospring.repositories.OrderItemRepository;
 import com.trinity.demospring.repositories.OrderRepository;
 import com.trinity.demospring.repositories.PaymentRepository;
 import com.trinity.demospring.repositories.ProductRepository;
@@ -57,6 +59,9 @@ public class TestConfig implements CommandLineRunner{
 	
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -115,6 +120,19 @@ public class TestConfig implements CommandLineRunner{
 		orderRepository.saveAll(Arrays.asList(ord1, ord2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 
+		OrderItem oi1 = new OrderItem(ord1, prod1, 0.00, 1, 2000.00);
+		OrderItem oi2 = new OrderItem(ord1, prod3, 0.00, 2, 80.00);
+		OrderItem oi3 = new OrderItem(ord2, prod2, 100.00, 1, 800.00);
+		
+		ord1.getItems().addAll(Arrays.asList(oi1, oi2));
+		ord2.getItems().addAll(Arrays.asList(oi3));
+		
+		prod1.getItems().addAll(Arrays.asList(oi1));
+		prod2.getItems().addAll(Arrays.asList(oi3));
+		prod3.getItems().addAll(Arrays.asList(oi2));
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
+		
 		
 	}
 
