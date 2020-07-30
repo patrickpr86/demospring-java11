@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.trinity.demospring.entities.enums.ClientType;
 
@@ -37,6 +38,7 @@ public class Client implements Serializable {
 	@CollectionTable(name="Phone")
 	private Set<String> phones = new HashSet<>(); //Representação de telefones por um conjunto de strings
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 
