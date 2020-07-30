@@ -1,5 +1,6 @@
 package com.trinity.demospring.config;
 
+import java.time.Instant;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.trinity.demospring.entities.Adress;
 import com.trinity.demospring.entities.Category;
 import com.trinity.demospring.entities.City;
 import com.trinity.demospring.entities.Client;
+import com.trinity.demospring.entities.Order;
+import com.trinity.demospring.entities.Payment;
+import com.trinity.demospring.entities.PaymentBankSlip;
+import com.trinity.demospring.entities.PaymentByCard;
 import com.trinity.demospring.entities.Product;
 import com.trinity.demospring.entities.State;
 import com.trinity.demospring.entities.enums.ClientType;
+import com.trinity.demospring.entities.enums.PaymentState;
 import com.trinity.demospring.repositories.AdressRepository;
 import com.trinity.demospring.repositories.CategoryRepository;
 import com.trinity.demospring.repositories.CityRepository;
 import com.trinity.demospring.repositories.ClientRepository;
+import com.trinity.demospring.repositories.OrderRepository;
+import com.trinity.demospring.repositories.PaymentRepository;
 import com.trinity.demospring.repositories.ProductRepository;
 import com.trinity.demospring.repositories.StateRepository;
 
@@ -44,8 +52,13 @@ public class TestConfig implements CommandLineRunner{
 	@Autowired
 	private AdressRepository adressRepository;
 
-	@Override
+	@Autowired
+	private OrderRepository orderRepository;
 	
+	@Autowired
+	private PaymentRepository paymentRepository;
+	
+	@Override
 	public void run(String... args) throws Exception {
 		
 		Category cat1 = new Category(null, "Informática");
@@ -88,9 +101,19 @@ public class TestConfig implements CommandLineRunner{
 		clientRepository.saveAll(Arrays.asList(cli1));
 		adressRepository.saveAll(Arrays.asList(ad1, ad2));
 		
+		Order ord1 = new Order(null, Instant.parse("2019-09-30T19:53:07Z"), cli1, ad1);
+		Order ord2 = new Order(null, Instant.parse("2019-10-10T15:53:07Z"), cli1, ad2);
 		
+		Payment pay1 = new PaymentByCard(null, PaymentState.PAID, ord1, 6);
+		ord1.setPayment(pay1);
+																								   
+		Payment pay2 = new PaymentBankSlip(null, PaymentState.WAITING_PAYMENT, ord2, Instant.parse("2019-10-20T00:00:00Z"), null );
+		ord2.setPayment(pay2);
 		
+		cli1.getOrders().addAll(Arrays.asList(ord1, ord2));
 		
+		orderRepository.saveAll(Arrays.asList(ord1, ord2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 
 		
 	}
