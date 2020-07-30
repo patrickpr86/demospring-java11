@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.trinity.demospring.entities.Category;
 import com.trinity.demospring.repositories.CategoryRepository;
-import com.trinity.demospring.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -20,13 +19,22 @@ public class CategoryService {
 		return repository.findAll();
 		
 	}
-	
-	public Category findById(Long id) {
+		
+	/*public Category findById(Long id) {
 		Optional<Category> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Category.class.getName()));
 	}
+	*/
 	
+	public Category findById(Long id) {
+		Optional<Category> obj =  repository.findById(id);
+		return obj.get();
+	}
+	
+	public Category insert(Category obj) {
+		return repository.save(obj);
+	}
 	
 
 }
