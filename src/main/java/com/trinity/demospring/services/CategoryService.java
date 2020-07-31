@@ -10,10 +10,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.example.course.services.exceptions.DatabaseException;
-import com.example.course.services.exceptions.ResourceNotFoundException;
 import com.trinity.demospring.entities.Category;
 import com.trinity.demospring.repositories.CategoryRepository;
+import com.trinity.demospring.services.exceptions.DatabaseException;
+import com.trinity.demospring.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class CategoryService {

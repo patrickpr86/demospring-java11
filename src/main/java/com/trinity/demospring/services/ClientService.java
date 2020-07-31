@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.course.services.exceptions.ResourceNotFoundException;
 import com.trinity.demospring.entities.Client;
 import com.trinity.demospring.repositories.ClientRepository;
+import com.trinity.demospring.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService {
