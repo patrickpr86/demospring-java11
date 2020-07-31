@@ -2,6 +2,10 @@ package com.trinity.demospring.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.trinity.demospring.entities.Category;
 
 public class CategoryDTO implements Serializable {
@@ -9,6 +13,10 @@ public class CategoryDTO implements Serializable {
 	
 	
 	private Long id;
+	
+	
+	@NotEmpty(message = "Mandatory filling!") //Preenchimento obrigatório
+	@Length(min=5, max=80, message = "The length must be between 5 and 80 characters")  //O tamanho deve ser entre 5 e 80 caracteres
 	private String name;
 
 	
