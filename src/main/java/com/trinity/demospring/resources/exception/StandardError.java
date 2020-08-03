@@ -28,6 +28,7 @@ public class StandardError implements Serializable {
 		this.path = path;
 	}
 
+	
 	public Instant getTimestamp() {
 		return timestamp;
 	}

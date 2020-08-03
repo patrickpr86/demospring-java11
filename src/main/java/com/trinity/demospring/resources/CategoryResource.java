@@ -58,9 +58,8 @@ public class CategoryResource {
 	@PutMapping
 	public ResponseEntity<Category> update(@Valid @RequestBody CategoryDTO objDTO, @PathVariable Long id) {
 		Category obj = service.fromDTO(objDTO);
-		obj.setId(id);
 		obj = service.update(id, obj);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok().body(obj);
 	}
 
 	@DeleteMapping(value = "{id}")
@@ -69,7 +68,7 @@ public class CategoryResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping(value = "/pages")
+	@GetMapping(value = "/page")
 	public ResponseEntity<Page<CategoryDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
